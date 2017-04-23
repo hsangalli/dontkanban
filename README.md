@@ -1,1 +1,2 @@
-# kanban
+# Kanban
+Online e sem cadastro.
