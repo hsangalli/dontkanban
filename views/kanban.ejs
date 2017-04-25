@@ -5,9 +5,10 @@
     <title>Kanban</title>
   </head>
   <body>
-    <h1>Title</h1>
+    <a href="/">Home</a>
+    <h1>localhost:3000/</h1>
     <form action="/add-task" method="post">
-      <input type="text" name="task">
+      <input type="text" name="task" placeholder="Add a new to-do task">
       <input type="submit" value="Add">
     </form>
     <h2>To do</h2>
@@ -16,7 +17,7 @@
     </ul>
     <h2>Doing</h2>
     <ul>
-    <% for(var i = 0; i < doimg.length; i++) { %><li><%= doing[i] %></li><% } %>
+    <% for(var i = 0; i < doing.length; i++) { %><li><%= doing[i] %></li><% } %>
     </ul>
     <h2>Done</h2>
     <ul>
