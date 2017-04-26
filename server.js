@@ -2,34 +2,35 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 
-var kanban = {title: '', tasks: {todo: [], doing: [], done: []}}
-var database = []
+var banco = [ { title: 'abc', todo: [], doing: [], done: [] } ]
+
+function getNumber (str) {
+  var counter = 0
+  for (var i = 0; i < banco.length; i++) {
+    if (str == banco[i].title) counter++
+  }
+  return counter
+}
 
 app.use(bodyParser.urlencoded({extended: true}))
 
 app.set('view engine' , 'ejs')
 
 app.get('/', (req, res) => {
-  res.render('index')
+  res.sendFile(__dirname + '/public/index.html')
 })
 
-app.get('/:kanban', (req, res) => {
-  for(var i = 0; i < database.length; i++){
-    if(database[i].title == req.params['kanban']) kanban = database[i]
-  }
-  console.log(kanban.tasks)
-  res.render('kanban', {todo: kanban.tasks.todo, doing: kanban.tasks.doing, done: kanban.tasks.done})
+app.get('/:titulo', (req, res) => {
+  var titulo = req.params['titulo']
+  var kanban = { title: titulo, todo: [], doing: [], done: [] }
+  if (getNumber(titulo) < 0) banco.push(kanban)
+
+  console.log(banco)
+  res.render('kanban', {kanban: kanban})
 })
 
-app.post('/enter', (req, res) => {
-  kanban.title = req.body.kanbanName
-  database.push(kanban)
-  res.redirect('/' + kanban.title)
-})
-
-app.post('/add-task', (req, res) => {
-  kanban.tasks.todo.push(req.body.task)
-  console.log(kanban.tasks)
+app.post('/adiciona', (req, res) => {
+  kanban.todo.push(req.body.task)
   res.redirect('/' + kanban.title)
 })
 
