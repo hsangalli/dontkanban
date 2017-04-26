@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 
+var kanban = {}
 var banco = [ { title: 'abc', todo: [], doing: [], done: [] } ]
 
 function getNumber (str) {
@@ -22,7 +23,7 @@ app.get('/', (req, res) => {
 
 app.get('/:titulo', (req, res) => {
   var titulo = req.params['titulo']
-  var kanban = { title: titulo, todo: [], doing: [], done: [] }
+  kanban = { title: titulo, todo: [], doing: [], done: [] }
   if (getNumber(titulo) < 0) banco.push(kanban)
 
   console.log(banco)
