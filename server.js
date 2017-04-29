@@ -3,11 +3,7 @@ const app = express()
 const bodyParser = require('body-parser')
 
 var kanban = {}
-<<<<<<< HEAD
 var banco = [{title: 'abc', todo: [], doing: [], done: []}]
-=======
-var banco = [ { title: 'abc', todo: [], doing: [], done: [] } ]
->>>>>>> 7b4e8963c74a903b020b99ffc7ccdf3bfd3c9637
 
 function getNumber (str) {
   var counter = 0
