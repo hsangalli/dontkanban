@@ -2,7 +2,8 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 
-var banco = [ { title: 'abc', todo: [], doing: [], done: [] } ]
+var kanban = {}
+var banco = [{title: 'abc', todo: [], doing: [], done: []}]
 
 function getNumber (str) {
   var counter = 0
@@ -22,15 +23,15 @@ app.get('/', (req, res) => {
 
 app.get('/:titulo', (req, res) => {
   var titulo = req.params['titulo']
-  var kanban = { title: titulo, todo: [], doing: [], done: [] }
-  if (getNumber(titulo) < 0) banco.push(kanban)
-
-  console.log(banco)
+  if (getNumber(titulo) == 0) banco.push({title: titulo, todo: [], doing: [], done: []})
+  kanban = banco[getNumber(titulo)]
   res.render('kanban', {kanban: kanban})
 })
 
 app.post('/adiciona', (req, res) => {
-  kanban.todo.push(req.body.task)
+  task = req.body.task
+  kanban.todo.push(task)
+  banco[getNumber(kanban.title)] = kanban
   res.redirect('/' + kanban.title)
 })
 
