@@ -1,17 +1,11 @@
+
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
+const MongoClient = require('mongodb').MongoClient
 
+var urlConexaoBancoDeDados = "mongodb://10.96.127.78:27017/kanban"
 var kanban = {}
-var banco = [{title: 'abc', todo: [], doing: [], done: []}]
-
-function getNumber (str) {
-  var counter = 0
-  for (var i = 0; i < banco.length; i++) {
-    if (str == banco[i].title) counter++
-  }
-  return counter
-}
 
 app.use(bodyParser.urlencoded({extended: true}))
 
@@ -21,17 +15,47 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/public/index.html')
 })
 
+app.post('/enter', (req, res) => {
+  res.redirect('/' + req.body.titulo)
+})
+
 app.get('/:titulo', (req, res) => {
   var titulo = req.params['titulo']
-  if (getNumber(titulo) == 0) banco.push({title: titulo, todo: [], doing: [], done: []})
-  kanban = banco[getNumber(titulo)]
-  res.render('kanban', {kanban: kanban})
+  MongoClient.connect(urlConexaoBancoDeDados, function(erroConexao, db) {
+    if(!erroConexao) {
+      var collection = db.collection(titulo);
+      collection.find().toArray(function(err, items) {
+        kanban = {title: titulo, todo: [], doing: [], done: []}
+        for(var index in items){
+          var item = items[index]
+          if(item.status === "todo"){
+            kanban.todo.push(item)
+          } else if(item.status === "doing"){
+            kanban.doing.push(item)
+          } else {
+            kanban.done.push(item)
+          }
+        }
+        res.render('kanban', {kanban: kanban})
+      });
+    }
+    else{
+      res.send(erroConexao)
+    }
+  })
 })
 
 app.post('/adiciona', (req, res) => {
   task = req.body.task
-  kanban.todo.push(task)
-  banco[getNumber(kanban.title)] = kanban
+  kanbanName = req.body.kanbanName
+
+  MongoClient.connect(urlConexaoBancoDeDados, function(erroConexao, db) {
+    if(!erroConexao) {
+      var collection = db.collection(kanbanName)
+      var taskObject = { description: task, status: "todo" }
+      collection.insert(taskObject)
+    }
+  })
   res.redirect('/' + kanban.title)
 })
 

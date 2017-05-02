@@ -9,11 +9,12 @@
     <h1>localhost:3000/<%= kanban.title %></h1>
     <form action="/adiciona" method="post">
       <input type="text" name="task" placeholder="Add a new to-do task" autofocus>
+      <input type="hidden" name="kanbanName" value="<%= kanban.title %>">
       <input type="submit" value="Add">
     </form>
     <h2>To do</h2>
     <ul><% for(var i = 0; i < kanban.todo.length; i++) { %>
-      <li><%= kanban.todo[i] %></li><% } %>
+      <li><%= kanban.todo[i].description %></li><% } %>
     </ul>
     <h2>Doing</h2>
     <ul>
