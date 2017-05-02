@@ -3,23 +3,24 @@
   <head>
     <meta charset="utf-8">
     <title>Kanban</title>
+    <link rel="stylesheet" href="stylesheets/style.css">
+    <script src="https://use.fontawesome.com/7ce95a0526.js"></script>
   </head>
   <body>
-    <a href="/">Início</a>
-    <h1>localhost:3000/<%= kanban.title %></h1>
+    localhost:3000/<%= kanban.title %> <br><br>
     <form action="/adiciona" method="post">
-      <input type="text" name="task" placeholder="Add a new to-do task" autofocus>
+      <input type="text" name="task" placeholder="Adicione uma tarefa" autofocus>
       <input type="hidden" name="kanbanName" value="<%= kanban.title %>">
-      <input type="submit" value="Add">
+      <button type="submit"><i class="fa fa-plus" aria-hidden="true"></i></button>
     </form>
-    <h2>To do</h2>
+    <h2>A fazer</h2>
     <ul><% for(var i = 0; i < kanban.todo.length; i++) { %>
       <li><%= kanban.todo[i].description %></li><% } %>
     </ul>
-    <h2>Doing</h2>
+    <h2>Fazendo</h2>
     <ul>
     </ul>
-    <h2>Done</h2>
+    <h2>Feito</h2>
     <ul>
     </ul>
   </body>

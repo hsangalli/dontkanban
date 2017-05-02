@@ -1,0 +1,31 @@
+* {
+
+  font-family: 'Montserrat', sans-serif;
+}
+
+body {
+  background-color: #ece6dd;
+  color: #757575;
+}
+
+input {
+  border: 1px solid #ccc;
+  font-size: 16px;
+  padding: 10px;
+}
+
+button {
+  background-color: #2ecc71;
+  border: 1px solid #27ae60;
+  color: #fff;
+  font-size: 16px;
+  padding: 10px;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+*:focus {
+  outline: none;
+}
