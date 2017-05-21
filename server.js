@@ -1,4 +1,3 @@
-
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
@@ -8,8 +7,7 @@ var urlConexaoBancoDeDados = "mongodb://10.96.127.78:27017/kanban"
 var kanban = {}
 
 app.use(bodyParser.urlencoded({extended: true}))
-
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/public'))
 
 app.set('view engine' , 'ejs')
 
@@ -25,7 +23,7 @@ app.get('/:titulo', (req, res) => {
   var titulo = req.params['titulo']
   MongoClient.connect(urlConexaoBancoDeDados, function(erroConexao, db) {
     if(!erroConexao) {
-      var collection = db.collection(titulo);
+      var collection = db.collection(titulo)
       collection.find().toArray(function(err, items) {
         kanban = {title: titulo, todo: [], doing: [], done: []}
         for(var index in items){
@@ -39,7 +37,7 @@ app.get('/:titulo', (req, res) => {
           }
         }
         res.render('kanban', {kanban: kanban})
-      });
+      })
     }
     else{
       res.send(erroConexao)
