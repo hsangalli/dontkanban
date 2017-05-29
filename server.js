@@ -3,7 +3,7 @@ const app = express()
 const bodyParser = require('body-parser')
 const MongoClient = require('mongodb').MongoClient
 
-var urlConexaoBancoDeDados = "mongodb://10.96.127.78:27017/kanban"
+var urlConexaoBancoDeDados = "mongodb://localhost/kanban"
 var kanban = {}
 
 app.use(bodyParser.urlencoded({extended: true}))
