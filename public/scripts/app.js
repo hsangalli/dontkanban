@@ -5,9 +5,11 @@ new Vue({
       description: '',
       color: ''
     },
-    toDoList: [],
-    doingList: [],
-    doneList: []
+    tasks: {
+      todo: [],
+      doing: [],
+      done: []
+    }
   },
   methods: {
     checkIfEnterWasPressed: function(event){
@@ -21,26 +23,26 @@ new Vue({
       const colors = ['blue', 'orange', 'purple', 'red', 'yellow'];
       const randomNumber = Math.floor((Math.random() * colors.length));
       this.newTask.color = colors[randomNumber];
-      this.toDoList.push(this.newTask);
+      this.tasks.todo.push(this.newTask);
     },
     getCurrentListOf: function(task){
-      if (this.toDoList.indexOf(task) > -1) {
-        return this.toDoList;
-      } else if (this.doingList.indexOf(task) > -1) {
-        return this.doingList;
-      } else if (this.doneList.indexOf(task) > -1) {
-        return this.doneList;
+      if (this.tasks.todo.indexOf(task) > -1) {
+        return this.tasks.todo;
+      } else if (this.tasks.doing.indexOf(task) > -1) {
+        return this.tasks.doing;
+      } else if (this.tasks.done.indexOf(task) > -1) {
+        return this.tasks.done;
       } else {
         return null;
       }
     },
     getNextListOf: function(list){
       switch (list) {
-        case this.toDoList:
-        return this.doingList;
+        case this.tasks.todo:
+        return this.tasks.doing;
         break;
-        case this.doingList:
-        return this.doneList;
+        case this.tasks.doing:
+        return this.tasks.done;
         break;
         default:
         return null;
@@ -54,8 +56,8 @@ new Vue({
       nextList.push(task);
     },
     removeTask: function(task){
-      const indexOfTask = this.doneList.indexOf(task);
-      this.doneList.splice(indexOfTask, 1);
+      const indexOfTask = this.tasks.done.indexOf(task);
+      this.tasks.done.splice(indexOfTask, 1);
     }
   }
-})
+});

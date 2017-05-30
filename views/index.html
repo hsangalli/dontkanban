@@ -20,8 +20,8 @@
     <section class="board">
       <div class="dashed-border-right">
         <h2>To do</h2>
-        <ul v-if="toDoList.length > 0">
-          <li v-for="task in toDoList" v-on:click="moveTask(task)" v-bind:class="task.color">
+        <ul v-if="tasks.todo.length > 0">
+          <li v-for="task in tasks.todo" v-on:click="moveTask(task)" v-bind:class="task.color">
             <p>{{ task.description }}</p>
             <i class="fa fa-play"></i>
           </li>
@@ -29,8 +29,8 @@
       </div>
       <div class="dashed-border-right">
         <h2>Doing</h2>
-        <ul v-if="doingList.length > 0">
-          <li v-for="task in doingList" v-on:click="moveTask(task)" v-bind:class="task.color">
+        <ul v-if="tasks.doing.length > 0">
+          <li v-for="task in tasks.doing" v-on:click="moveTask(task)" v-bind:class="task.color">
             <p>{{ task.description }}</p>
             <i class="fa fa-check"></i>
           </li>
@@ -38,8 +38,8 @@
       </div>
       <div>
         <h2>Done</h2>
-        <ul v-if="doneList.length > 0">
-          <li v-for="task in doneList" v-on:click="removeTask()" v-bind:class="task.color">
+        <ul v-if="tasks.done.length > 0">
+          <li v-for="task in tasks.done" v-on:click="removeTask()" v-bind:class="task.color">
             <p>{{ task.description }}</p>
             <i class="fa fa-trash-o"></i>
           </li>
