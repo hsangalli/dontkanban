@@ -5,8 +5,12 @@ const connectionURI = "mongodb://localhost/dontkanban"
 
 app.use(express.static(__dirname + '/public'))
 
-app.get('/:kanban', (req, res) => {
+app.get('/', (req, res) => {
   res.sendFile(__dirname + '/views/index.html')
+});
+
+app.get('/:kanban', (req, res) => {
+  res.sendFile(__dirname + '/views/kanban.html')
 })
 
 app.get('/:kanban/pull', (req, res) => {
