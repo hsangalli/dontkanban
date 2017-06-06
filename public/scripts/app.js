@@ -1,14 +1,15 @@
 new Vue({
   el: '#app',
   data: {
-    newTask: {
-      description: '',
-      color: ''
-    },
+    title: '',
     tasks: {
       todo: [],
       doing: [],
       done: []
+    },
+    newTask: {
+      description: '',
+      color: ''
     }
   },
   methods: {
@@ -58,6 +59,14 @@ new Vue({
     removeTask: function(task){
       const indexOfTask = this.tasks.done.indexOf(task);
       this.tasks.done.splice(indexOfTask, 1);
+    },
+    getKanban: function(){ // Needs to be called on page load
+      const path = location.pathname;
+      this.$http.get(path + '/pull').then(function(kanbanDocument){
+        const kanban = kanbanDocument.body[0];
+        this.title = kanban.title;
+        this.tasks = kanban.tasks;
+      });
     }
   }
 });
