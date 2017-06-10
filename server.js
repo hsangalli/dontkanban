@@ -21,8 +21,8 @@ app.get('/:kanban/pull', (req, res) => {
     if(connectionError) {
       res.send(connectionError)
     } else{
-      const kanbanTitle = req.params['kanban']
-      const collection = database.collection('kanbans')
+      kanbanTitle = req.params['kanban']
+      collection = database.collection('kanbans')
       collection.find({title: kanbanTitle}).toArray((err, items) => {
         res.setHeader('Content-Type', 'application/json')
         res.send(JSON.stringify(items))
@@ -31,12 +31,15 @@ app.get('/:kanban/pull', (req, res) => {
   })
 })
 
-app.get('/:kanban/add/:task', (req, res) => {
+app.post('/:kanban/push', (req, res) => {
   MongoClient.connect(connectionURI,(connectionError, database) => {
     if(connectionError) {
       res.send(connectionError)
     } else{
-      console.log('a');
+      // collection.update(
+      //   {title: kanbanTitle},
+      //   <<< Vue.data.kanban >>>
+      // );
     }
   })
 })
