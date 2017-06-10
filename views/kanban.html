@@ -18,12 +18,11 @@
     <h1>Kanban</h1>
   </header>
   <div id="app">
-    <button v-on:click="getKanban()" autofocus>PULL TASKS</button>
     <section class="board">
       <div class="dashed-border-right">
         <h2>To do</h2>
-        <ul v-if="tasks.todo.length > 0">
-          <li v-for="task in tasks.todo" v-on:click="moveTask(task)" v-bind:class="task.color">
+        <ul v-if="kanban.tasks.todo.length > 0">
+          <li v-for="task in kanban.tasks.todo" v-on:click="moveTask(task)" v-bind:class="task.color">
             <p>{{ task.description }}</p>
             <i class="fa fa-play"></i>
           </li>
@@ -31,8 +30,8 @@
       </div>
       <div class="dashed-border-right">
         <h2>Doing</h2>
-        <ul v-if="tasks.doing.length > 0">
-          <li v-for="task in tasks.doing" v-on:click="moveTask(task)" v-bind:class="task.color">
+        <ul v-if="kanban.tasks.doing.length > 0">
+          <li v-for="task in kanban.tasks.doing" v-on:click="moveTask(task)" v-bind:class="task.color">
             <p>{{ task.description }}</p>
             <i class="fa fa-check"></i>
           </li>
@@ -40,8 +39,8 @@
       </div>
       <div>
         <h2>Done</h2>
-        <ul v-if="tasks.done.length > 0">
-          <li v-for="task in tasks.done" v-on:click="removeTask()" v-bind:class="task.color">
+        <ul v-if="kanban.tasks.done.length > 0">
+          <li v-for="task in kanban.tasks.done" v-on:click="removeTask(task)" v-bind:class="task.color">
             <p>{{ task.description }}</p>
             <i class="fa fa-trash-o"></i>
           </li>

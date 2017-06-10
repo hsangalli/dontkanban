@@ -1,11 +1,13 @@
 new Vue({
   el: '#app',
   data: {
-    title: '',
-    tasks: {
-      todo: [],
-      doing: [],
-      done: []
+    kanban: {
+      title: '',
+      tasks: {
+        todo: [],
+        doing: [],
+        done: []
+      }
     },
     newTask: {
       description: '',
@@ -24,26 +26,26 @@ new Vue({
       const colors = ['blue', 'orange', 'purple', 'red', 'yellow'];
       const randomNumber = Math.floor((Math.random() * colors.length));
       this.newTask.color = colors[randomNumber];
-      this.tasks.todo.push(this.newTask);
+      this.kanban.tasks.todo.push(this.newTask);
     },
     getCurrentListOf: function(task){
-      if (this.tasks.todo.indexOf(task) > -1) {
-        return this.tasks.todo;
-      } else if (this.tasks.doing.indexOf(task) > -1) {
-        return this.tasks.doing;
-      } else if (this.tasks.done.indexOf(task) > -1) {
-        return this.tasks.done;
+      if (this.kanban.tasks.todo.indexOf(task) > -1) {
+        return this.kanban.tasks.todo;
+      } else if (this.kanban.tasks.doing.indexOf(task) > -1) {
+        return this.kanban.tasks.doing;
+      } else if (this.kanban.tasks.done.indexOf(task) > -1) {
+        return this.kanban.tasks.done;
       } else {
         return null;
       }
     },
     getNextListOf: function(list){
       switch (list) {
-        case this.tasks.todo:
-        return this.tasks.doing;
+        case this.kanban.tasks.todo:
+        return this.kanban.tasks.doing;
         break;
-        case this.tasks.doing:
-        return this.tasks.done;
+        case this.kanban.tasks.doing:
+        return this.kanban.tasks.done;
         break;
         default:
         return null;
@@ -57,16 +59,15 @@ new Vue({
       nextList.push(task);
     },
     removeTask: function(task){
-      const indexOfTask = this.tasks.done.indexOf(task);
-      this.tasks.done.splice(indexOfTask, 1);
-    },
-    getKanban: function(){ // Needs to be called on page load
-      const path = location.pathname;
-      this.$http.get(path + '/pull').then(function(kanbanDocument){
-        const kanban = kanbanDocument.body[0];
-        this.title = kanban.title;
-        this.tasks = kanban.tasks;
-      });
+      const currentList = this.getCurrentListOf(task);
+      const indexOfTask = currentList.indexOf(task);
+      currentList.splice(indexOfTask, 1);
     }
+  },
+  mounted: function(){
+    const path = location.pathname;
+    this.$http.get(path + '/pull').then(function(kanbanDocument){
+      this.kanban = kanbanDocument.body[0];
+    });
   }
 });
