@@ -23,10 +23,16 @@ new Vue({
       }
     },
     addTask: function(){
+      const path = location.pathname;
       const colors = ['blue', 'orange', 'purple', 'red', 'yellow'];
       const randomNumber = Math.floor((Math.random() * colors.length));
       this.newTask.color = colors[randomNumber];
       this.kanban.tasks.todo.push(this.newTask);
+      var data = this.newTask;
+      this.$http.post(path + '/push', data, {headers: {'Content-Type': 'application/json'}}).then(function(kanbanDocument){
+        //this.kanban = kanbanDocument.body[0];
+        alert("Foee!");
+      });
     },
     getCurrentListOf: function(task){
       if (this.kanban.tasks.todo.indexOf(task) > -1) {

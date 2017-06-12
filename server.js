@@ -1,13 +1,14 @@
 const express = require('express')
 const app = express()
+const bodyParser = require('body-parser')
 const MongoClient = require('mongodb').MongoClient
-const connectionURI = "mongodb://localhost/dontkanban"
+const connectionURI = "mongodb://aluno5-OptiPlex-990.local/dontkanban"
 
 var kanbanTitle = ''
 var collection = ''
 
 app.use(express.static(__dirname + '/public'))
-
+app.use(bodyParser.json());
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/views/index.html')
 })
@@ -36,10 +37,8 @@ app.post('/:kanban/push', (req, res) => {
     if(connectionError) {
       res.send(connectionError)
     } else{
-      // collection.update(
-      //   {title: kanbanTitle},
-      //   <<< Vue.data.kanban >>>
-      // );
+      console.log(JSON.stringify(req.body))
+      //TODO: Insert in database
     }
   })
 })
