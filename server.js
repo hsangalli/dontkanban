@@ -25,6 +25,17 @@ app.get('/insert', (req, res) => {
   })
 })
 
+app.get('/drop', (req, res) => {
+  MongoClient.connect(connectionURI,(connectionError, database) => {
+    if(connectionError) {
+      res.send(connectionError)
+    } else{
+      collection = database.collection('kanbans')
+      collection.drop()
+    }
+  })
+})
+
 app.get('/:kanban', (req, res) => {
   res.sendFile(__dirname + '/views/kanban.html')
 })
@@ -44,14 +55,11 @@ app.get('/:kanban/fetch-data', (req, res) => {
   })
 })
 
-app.post('/:kanban/add-task', (req, res) => {
+app.post('/add-task', (req, res) => {
   MongoClient.connect(connectionURI,(connectionError, database) => {
     if(connectionError) {
       res.send(connectionError)
     } else{
-      console.log(JSON.stringify(req.body))
-      kanbanTitle = req.params['kanban']
-      collection = database.collection('kanbans')
       collection.update(
         {"title": kanbanTitle},
         {"$push": {"tasks.todo": req.body}},
