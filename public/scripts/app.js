@@ -28,11 +28,7 @@ new Vue({
       const randomNumber = Math.floor((Math.random() * colors.length));
       this.newTask.color = colors[randomNumber];
       this.kanban.tasks.todo.push(this.newTask);
-      var data = this.newTask;
-      this.$http.post(path + '/push', data, {headers: {'Content-Type': 'application/json'}}).then(function(kanbanDocument){
-        //this.kanban = kanbanDocument.body[0];
-        alert("Foee!");
-      });
+      this.$http.post(path + '/add-task', this.newTask, {headers: {'Content-Type': 'application/json'}});
     },
     getCurrentListOf: function(task){
       if (this.kanban.tasks.todo.indexOf(task) > -1) {
@@ -72,7 +68,7 @@ new Vue({
   },
   mounted: function(){
     const path = location.pathname;
-    this.$http.get(path + '/pull').then(function(kanbanDocument){
+    this.$http.get(path + '/fetch-data').then(function(kanbanDocument){
       this.kanban = kanbanDocument.body[0];
     });
   }

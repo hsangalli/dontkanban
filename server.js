@@ -2,22 +2,34 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 const MongoClient = require('mongodb').MongoClient
-const connectionURI = "mongodb://aluno5-OptiPlex-990.local/dontkanban"
+const connectionURI = "mongodb://localhost/dontkanban"
 
 var kanbanTitle = ''
 var collection = ''
 
 app.use(express.static(__dirname + '/public'))
 app.use(bodyParser.json());
+
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/views/index.html')
+})
+
+app.get('/insert', (req, res) => {
+  MongoClient.connect(connectionURI,(connectionError, database) => {
+    if(connectionError) {
+      res.send(connectionError)
+    } else{
+      collection = database.collection('kanbans')
+      collection.insert({title: "teste", tasks: { todo: [ {description: "Trab", color: "red"} ], doing: [], done: [] }})
+    }
+  })
 })
 
 app.get('/:kanban', (req, res) => {
   res.sendFile(__dirname + '/views/kanban.html')
 })
 
-app.get('/:kanban/pull', (req, res) => {
+app.get('/:kanban/fetch-data', (req, res) => {
   MongoClient.connect(connectionURI,(connectionError, database) => {
     if(connectionError) {
       res.send(connectionError)
@@ -32,13 +44,19 @@ app.get('/:kanban/pull', (req, res) => {
   })
 })
 
-app.post('/:kanban/push', (req, res) => {
+app.post('/:kanban/add-task', (req, res) => {
   MongoClient.connect(connectionURI,(connectionError, database) => {
     if(connectionError) {
       res.send(connectionError)
     } else{
       console.log(JSON.stringify(req.body))
-      //TODO: Insert in database
+      kanbanTitle = req.params['kanban']
+      collection = database.collection('kanbans')
+      collection.update(
+        {"title": kanbanTitle},
+        {"$push": {"tasks.todo": req.body}},
+        {"upsert": "true"}
+      )
     }
   })
 })
