@@ -68,8 +68,15 @@ new Vue({
   },
   mounted: function(){
     const path = location.pathname;
+    const kanbanTitle = path.slice(1);
+    this.kanban.title = kanbanTitle;
     this.$http.get(path + '/fetch-data').then(function(kanbanDocument){
-      this.kanban = kanbanDocument.body[0];
+      if (kanbanDocument.body[0]) {
+        this.kanban = kanbanDocument.body[0];
+        console.log('if'+JSON.stringify(kanbanDocument.body[0]));
+      } else {
+        this.$http.post('/create-kanban', this.kanban, {headers: {'Content-Type': 'application/json'}});
+      }
     });
   }
 });

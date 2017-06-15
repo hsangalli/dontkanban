@@ -55,6 +55,17 @@ app.get('/:kanban/fetch-data', (req, res) => {
   })
 })
 
+app.post('/create-kanban', (req, res) => {
+  MongoClient.connect(connectionURI,(connectionError, database) => {
+    if(connectionError) {
+      res.send(connectionError)
+    } else{
+      console.log('creating ' + JSON.stringify(req.body));
+      collection.insert(req.body)
+    }
+  })
+})
+
 app.post('/add-task', (req, res) => {
   MongoClient.connect(connectionURI,(connectionError, database) => {
     if(connectionError) {
