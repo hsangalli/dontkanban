@@ -73,7 +73,6 @@ new Vue({
     this.$http.get(path + '/fetch-data').then(function(kanbanDocument){
       if (kanbanDocument.body[0]) {
         this.kanban = kanbanDocument.body[0];
-        console.log('if'+JSON.stringify(kanbanDocument.body[0]));
       } else {
         this.$http.post('/create-kanban', this.kanban, {headers: {'Content-Type': 'application/json'}});
       }
