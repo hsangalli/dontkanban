@@ -5,7 +5,6 @@ const MongoClient = require('mongodb').MongoClient
 const connectionURI = "mongodb://localhost/dontkanban"
 
 var kanbanTitle = ''
-var collection = ''
 
 app.use(express.static(__dirname + '/public'))
 app.use(bodyParser.json());
@@ -19,8 +18,14 @@ app.get('/insert', (req, res) => {
     if(connectionError) {
       res.send(connectionError)
     } else{
-      collection = database.collection('kanbans')
-      collection.insert({title: "teste", tasks: { todo: [ {description: "Trab", color: "red"} ], doing: [], done: [] }})
+      database.collection('kanbans').insert({
+        title: "teste",
+        tasks: {
+          todo: [{description: "Trab", color: "red"}],
+          doing: [],
+          done: []
+        }
+      })
     }
   })
 })
@@ -30,8 +35,7 @@ app.get('/drop', (req, res) => {
     if(connectionError) {
       res.send(connectionError)
     } else{
-      collection = database.collection('kanbans')
-      collection.drop()
+      database.collection('kanbans').drop()
     }
   })
 })
@@ -46,8 +50,7 @@ app.get('/:kanban/fetch-data', (req, res) => {
       res.send(connectionError)
     } else{
       kanbanTitle = req.params['kanban']
-      collection = database.collection('kanbans')
-      collection.find({title: kanbanTitle}).toArray((err, items) => {
+      database.collection('kanbans').find({title: kanbanTitle}).toArray((err, items) => {
         res.setHeader('Content-Type', 'application/json')
         res.send(JSON.stringify(items))
       })
@@ -60,8 +63,7 @@ app.post('/create-kanban', (req, res) => {
     if(connectionError) {
       res.send(connectionError)
     } else{
-      console.log('creating ' + JSON.stringify(req.body));
-      collection.insert(req.body)
+      database.collection('kanbans').insert(req.body)
     }
   })
 })
@@ -71,7 +73,7 @@ app.post('/add-task', (req, res) => {
     if(connectionError) {
       res.send(connectionError)
     } else{
-      collection.update(
+      database.collection('kanbans').update(
         {"title": kanbanTitle},
         {"$push": {"tasks.todo": req.body}},
         {"upsert": "true"}
