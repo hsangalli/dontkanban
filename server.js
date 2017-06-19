@@ -82,6 +82,25 @@ app.post('/add-task', (req, res) => {
   })
 })
 
+app.post('/move-task', (req, res) => {
+  MongoClient.connect(connectionURI,(connectionError, database) => {
+    if(connectionError) {
+      res.send(connectionError)
+    } else{
+      // Nao ta funcionando como deveria!!
+      // Remodelar tasks -> status, description, color
+      const currentList = req.body.currentList
+      const nextList = req.body.nextList
+      const taskToBeMoved = req.body.taskToBeMoved
+      database.collection('kanbans').update(
+        {"title": kanbanTitle},
+        {"$pull": {currentList: taskToBeMoved},"$push": {nextList: taskToBeMoved}},
+        {"upsert": "true"}
+      )
+    }
+  })
+})
+
 app.listen(3000, () => {
   console.log('Servidor rodando em http://localhost:3000/')
 })

@@ -57,8 +57,11 @@ new Vue({
       const currentList = this.getCurrentListOf(task);
       const nextList = this.getNextListOf(currentList);
       const indexOfTask = currentList.indexOf(task);
+      const taskToBeMoved = currentList[indexOfTask];
       currentList.splice(indexOfTask, 1);
       nextList.push(task);
+      const data = { "currentList": currentList, "nextList": nextList, "taskToBeMoved": taskToBeMoved };
+      this.$http.post('/move-task', data, {headers: {'Content-Type': 'application/json'}});
     },
     removeTask: function(task){
       const currentList = this.getCurrentListOf(task);
