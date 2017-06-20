@@ -20,11 +20,7 @@ app.get('/insert', (req, res) => {
     } else{
       database.collection('kanbans').insert({
         title: "teste",
-        tasks: {
-          todo: [{description: "Trab", color: "red"}],
-          doing: [],
-          done: []
-        }
+        tasks: [{description: "Trab", color: "red"}]
       })
     }
   })
@@ -75,7 +71,7 @@ app.post('/add-task', (req, res) => {
     } else{
       database.collection('kanbans').update(
         {"title": kanbanTitle},
-        {"$push": {"tasks.todo": req.body}},
+        {"$push": {"tasks": req.body}},
         {"upsert": "true"}
       )
     }
@@ -89,14 +85,14 @@ app.post('/move-task', (req, res) => {
     } else{
       // Nao ta funcionando como deveria!!
       // Remodelar tasks -> status, description, color
-      const currentList = req.body.currentList
-      const nextList = req.body.nextList
-      const taskToBeMoved = req.body.taskToBeMoved
-      database.collection('kanbans').update(
-        {"title": kanbanTitle},
-        {"$pull": {currentList: taskToBeMoved},"$push": {nextList: taskToBeMoved}},
-        {"upsert": "true"}
-      )
+      // const currentList = req.body.currentList
+      // const nextList = req.body.nextList
+      // const taskToBeMoved = req.body.taskToBeMoved
+      // database.collection('kanbans').update(
+      //   {"title": kanbanTitle},
+      //   {"$pull": {currentList: taskToBeMoved},"$push": {nextList: taskToBeMoved}},
+      //   {"upsert": "true"}
+      // )
     }
   })
 })
