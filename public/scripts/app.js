@@ -34,7 +34,8 @@ new Vue({
     },
     removeTask: function(task){
       const indexOfTask = this.kanban.tasks.indexOf(task);
-      tihs.kanban.tasks.splice(indexOfTask, 1);
+      this.kanban.tasks.splice(indexOfTask, 1);
+      this.$http.post('/remove-task', task, {headers: {'Content-Type': 'application/json'}});
     }
   },
   mounted: function(){

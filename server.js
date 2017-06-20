@@ -104,6 +104,12 @@ app.post('/remove-task', (req, res) => {
       res.send(connectionError)
     } else{
       // TODO: Remove task from database
+      const taskToBeRemoved = req.body
+      database.collection('kanbans').update(
+        {"title": kanbanTitle},
+        {"$pull": {"tasks": taskToBeRemoved}},
+        {"upsert": "true"}
+      )
     }
   })
 })
