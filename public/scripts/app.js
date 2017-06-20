@@ -30,7 +30,7 @@ new Vue({
     moveTask: function(task){
       const indexOfTask = this.kanban.tasks.indexOf(task);
       this.kanban.tasks[indexOfTask].column += 1;
-      this.$http.post('/move-task', data, {headers: {'Content-Type': 'application/json'}});
+      this.$http.post('/move-task', task, {headers: {'Content-Type': 'application/json'}});
     },
     removeTask: function(task){
       const indexOfTask = this.kanban.tasks.indexOf(task);

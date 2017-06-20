@@ -21,29 +21,35 @@
     <section class="board">
       <div class="dashed-border-right">
         <h2>To do</h2>
-        <ul v-if="kanban.tasks.length > 0">
-          <li v-for="task in kanban.tasks" v-on:click="moveTask(task)" v-bind:class="task.color">
-            <p v-if="task.column == 1">{{ task.description }}</p>
-            <i class="fa fa-play"></i>
-          </li>
+        <ul>
+          <template v-for="task in kanban.tasks">
+            <li v-if="task.column == 1" v-on:click="moveTask(task)" v-bind:class="task.color">
+              <p>{{ task.description }}</p>
+              <i class="fa fa-play"></i>
+            </li>
+          </template>
         </ul>
       </div>
       <div class="dashed-border-right">
         <h2>Doing</h2>
-        <ul v-if="kanban.tasks.length > 0">
-          <li v-for="task in kanban.tasks" v-on:click="moveTask(task)" v-bind:class="task.color">
-            <p v-if="task.column == 2">{{ task.description }}</p>
-            <i class="fa fa-check"></i>
-          </li>
+        <ul>
+          <template v-for="task in kanban.tasks">
+            <li v-if="task.column == 2" v-on:click="moveTask(task)" v-bind:class="task.color">
+              <p>{{ task.description }}</p>
+              <i class="fa fa-check"></i>
+            </li>
+          </template>
         </ul>
       </div>
       <div>
         <h2>Done</h2>
-        <ul v-if="kanban.tasks.length > 0">
-          <li v-for="task in kanban.tasks" v-on:click="removeTask(task)" v-bind:class="task.color">
-            <p v-if="task.column == 3">{{ task.description }}</p>
-            <i class="fa fa-trash-o"></i>
-          </li>
+        <ul>
+          <template v-for="task in kanban.tasks">
+            <li v-if="task.column == 3" v-on:click="removeTask(task)" v-bind:class="task.color">
+              <p>{{ task.description }}</p>
+              <i class="fa fa-trash-o"></i>
+            </li>
+          </template>
         </ul>
       </div>
     </section>
