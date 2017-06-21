@@ -10,9 +10,16 @@ Before running the project, you need to install the following programs:
 > ```git clone https://github.com/hsangalli/kanban.git```  
 > ```cd kanban```  
 
-## Run With Docker
 
+
+
+## Run With Docker
 The big advantage to run with docker is that the Mongo database is already configured, you don't need to worry about database configurations.
+
+<details>
+
+  <summary>Click to Open</summary>
+  
 ### Requirements Docker
 To run with docker you need the programs:
 > **Docker**  
@@ -26,8 +33,16 @@ or
 
 > ```docker-compose up```
 
+</details>
+
 ## Run Without Docker
-Execute
+
+<details>
+
+  <summary>Click to Open</summary>
+  
+  
+To run without Docker execute
 > ```npm install```  
 
 And set the environment variable ```MONGO_URL``` to a valid mongo instance.
@@ -38,6 +53,6 @@ Example:
 To run the application, execute:
 > ```node server.js```  
 
-
+</details>
 
 Open your browser in http://localhost:3000/
