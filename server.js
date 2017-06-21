@@ -3,7 +3,7 @@ const app = express()
 const bodyParser = require('body-parser')
 const MongoClient = require('mongodb').MongoClient
 
-var urlConexaoBancoDeDados = "mongodb://localhost/kanban"
+var urlConexaoBancoDeDados = process.env.MONGO_URL//"mongodb://localhost/kanban"
 var kanban = {}
 
 app.use(bodyParser.urlencoded({extended: true}))
@@ -59,6 +59,6 @@ app.post('/adiciona', (req, res) => {
   res.redirect('/' + kanban.title)
 })
 
-app.listen(3000, () => {
+app.listen(3000, "0.0.0.0",() => {
   console.log('Servidor rodando em http://localhost:3000/')
 })
