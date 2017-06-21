@@ -59,6 +59,6 @@ app.post('/adiciona', (req, res) => {
   res.redirect('/' + kanban.title)
 })
 
-app.listen(3000, () => {
+app.listen(3000, "0.0.0.0",() => {
   console.log('Servidor rodando em http://localhost:3000/')
 })
