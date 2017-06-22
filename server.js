@@ -16,7 +16,7 @@ app.get('/', (req, res) => {
 app.get('/insert', (req, res) => {
   MongoClient.connect(connectionURI,(connectionError, database) => {
     if(connectionError) {
-      res.send(connectionError)
+      res.status(500).send('Database Error');
     } else{
       database.collection('kanbans').insert({
         title: "teste",
@@ -29,7 +29,7 @@ app.get('/insert', (req, res) => {
 app.get('/drop', (req, res) => {
   MongoClient.connect(connectionURI,(connectionError, database) => {
     if(connectionError) {
-      res.send(connectionError)
+      res.status(500).send('Database Error');
     } else{
       database.collection('kanbans').drop()
     }
@@ -43,7 +43,7 @@ app.get('/:kanban', (req, res) => {
 app.get('/:kanban/fetch-data', (req, res) => {
   MongoClient.connect(connectionURI,(connectionError, database) => {
     if(connectionError) {
-      res.send(connectionError)
+      res.status(500).send('Database Error');
     } else{
       kanbanTitle = req.params['kanban']
       database.collection('kanbans').find({title: kanbanTitle}).toArray((err, items) => {
@@ -57,7 +57,7 @@ app.get('/:kanban/fetch-data', (req, res) => {
 app.post('/create-kanban', (req, res) => {
   MongoClient.connect(connectionURI,(connectionError, database) => {
     if(connectionError) {
-      res.send(connectionError)
+      res.status(500).send('Database Error');
     } else{
       database.collection('kanbans').insert(req.body)
     }
@@ -67,7 +67,7 @@ app.post('/create-kanban', (req, res) => {
 app.post('/add-task', (req, res) => {
   MongoClient.connect(connectionURI,(connectionError, database) => {
     if(connectionError) {
-      res.send(connectionError)
+      res.status(500).send('Database Error');
     } else{
       database.collection('kanbans').update(
         {"title": kanbanTitle},
@@ -81,7 +81,7 @@ app.post('/add-task', (req, res) => {
 app.post('/move-task', (req, res) => {
   MongoClient.connect(connectionURI,(connectionError, database) => {
     if(connectionError) {
-      res.send(connectionError)
+      res.status(500).send('Database Error');
     } else{
       const taskToBeMoved = req.body
       database.collection('kanbans').update(
@@ -101,7 +101,7 @@ app.post('/move-task', (req, res) => {
 app.post('/remove-task', (req, res) => {
   MongoClient.connect(connectionURI,(connectionError, database) => {
     if(connectionError) {
-      res.send(connectionError)
+      res.status(500).send('Database Error');
     } else{
       const taskToBeRemoved = req.body
       database.collection('kanbans').update(
