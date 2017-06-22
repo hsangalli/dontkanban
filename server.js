@@ -103,7 +103,6 @@ app.post('/remove-task', (req, res) => {
     if(connectionError) {
       res.send(connectionError)
     } else{
-      // TODO: Remove task from database
       const taskToBeRemoved = req.body
       database.collection('kanbans').update(
         {"title": kanbanTitle},
@@ -116,5 +115,5 @@ app.post('/remove-task', (req, res) => {
 
 
 app.listen(3000, () => {
-  console.log('Servidor rodando em http://localhost:3000/')
+  console.log('Server listening on port 3000')
 })
