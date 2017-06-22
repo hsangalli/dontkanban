@@ -1,61 +1,53 @@
 new Vue({
   el: '#app',
   data: {
+    kanban: {
+      title: '',
+      tasks: []
+    },
     newTask: {
+      column: 1,
       description: '',
       color: ''
-    },
-    toDoList: [],
-    doingList: [],
-    doneList: []
+    }
   },
   methods: {
-    checkIfEnterWasPressed: function(event){
+    checkIfEnterWasPressed(event){
       event = event || window.event;
       if (event.keyCode == 13) {
         this.addTask();
-        this.newTask = {};
+        this.newTask = {column: 1};
       }
     },
-    addTask: function(){
+    addTask(){
+      const path = location.pathname;
       const colors = ['blue', 'orange', 'purple', 'red', 'yellow'];
       const randomNumber = Math.floor((Math.random() * colors.length));
       this.newTask.color = colors[randomNumber];
-      this.toDoList.push(this.newTask);
+      this.kanban.tasks.push(this.newTask);
+      this.$http.post('/add-task', this.newTask, {headers: {'Content-Type': 'application/json'}});
     },
-    getCurrentListOf: function(task){
-      if (this.toDoList.indexOf(task) > -1) {
-        return this.toDoList;
-      } else if (this.doingList.indexOf(task) > -1) {
-        return this.doingList;
-      } else if (this.doneList.indexOf(task) > -1) {
-        return this.doneList;
-      } else {
-        return null;
-      }
+    moveTask(task){
+      const indexOfTask = this.kanban.tasks.indexOf(task);
+      this.kanban.tasks[indexOfTask].column += 1;
+      this.$http.post('/move-task', task, {headers: {'Content-Type': 'application/json'}});
     },
-    getNextListOf: function(list){
-      switch (list) {
-        case this.toDoList:
-        return this.doingList;
-        break;
-        case this.doingList:
-        return this.doneList;
-        break;
-        default:
-        return null;
-      }
-    },
-    moveTask: function(task){
-      const currentList = this.getCurrentListOf(task);
-      const nextList = this.getNextListOf(currentList);
-      const indexOfTask = currentList.indexOf(task);
-      currentList.splice(indexOfTask, 1);
-      nextList.push(task);
-    },
-    removeTask: function(task){
-      const indexOfTask = this.doneList.indexOf(task);
-      this.doneList.splice(indexOfTask, 1);
+    removeTask(task){
+      const indexOfTask = this.kanban.tasks.indexOf(task);
+      this.kanban.tasks.splice(indexOfTask, 1);
+      this.$http.post('/remove-task', task, {headers: {'Content-Type': 'application/json'}});
     }
+  },
+  mounted(){
+    const path = location.pathname;
+    const kanbanTitle = path.slice(1);
+    this.kanban.title = kanbanTitle;
+    this.$http.get(path + '/fetch-data').then(function(kanbanDocument){
+      if (kanbanDocument.body[0]) {
+        this.kanban = kanbanDocument.body[0];
+      } else {
+        this.$http.post('/create-kanban', this.kanban, {headers: {'Content-Type': 'application/json'}});
+      }
+    });
   }
-})
+});

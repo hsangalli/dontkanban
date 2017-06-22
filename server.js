@@ -2,63 +2,118 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 const MongoClient = require('mongodb').MongoClient
+const connectionURI = "mongodb://localhost/dontkanban"
 
-var urlConexaoBancoDeDados = "mongodb://localhost/kanban"
-var kanban = {}
+var kanbanTitle = ''
 
-app.use(bodyParser.urlencoded({extended: true}))
 app.use(express.static(__dirname + '/public'))
-
-app.set('view engine' , 'ejs')
+app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/views/index.html')
 })
 
-app.post('/enter', (req, res) => {
-  res.redirect('/' + req.body.titulo)
-})
-
-app.get('/:titulo', (req, res) => {
-  var titulo = req.params['titulo']
-  MongoClient.connect(urlConexaoBancoDeDados, function(erroConexao, db) {
-    if(!erroConexao) {
-      var collection = db.collection(titulo)
-      collection.find().toArray(function(err, items) {
-        kanban = {title: titulo, todo: [], doing: [], done: []}
-        for(var index in items){
-          var item = items[index]
-          if(item.status === "todo"){
-            kanban.todo.push(item)
-          } else if(item.status === "doing"){
-            kanban.doing.push(item)
-          } else {
-            kanban.done.push(item)
-          }
-        }
-        res.render('kanban', {kanban: kanban})
+app.get('/insert', (req, res) => {
+  MongoClient.connect(connectionURI,(connectionError, database) => {
+    if(connectionError) {
+      res.status(500).send('Database Error');
+    } else{
+      database.collection('kanbans').insert({
+        title: "teste",
+        tasks: [{description: "Trab", color: "red"}]
       })
     }
-    else{
-      res.send(erroConexao)
+  })
+})
+
+app.get('/drop', (req, res) => {
+  MongoClient.connect(connectionURI,(connectionError, database) => {
+    if(connectionError) {
+      res.status(500).send('Database Error');
+    } else{
+      database.collection('kanbans').drop()
     }
   })
 })
 
-app.post('/adiciona', (req, res) => {
-  task = req.body.task
-  kanbanName = req.body.kanbanName
+app.get('/:kanban', (req, res) => {
+  res.sendFile(__dirname + '/views/kanban.html')
+})
 
-  MongoClient.connect(urlConexaoBancoDeDados, function(erroConexao, db) {
-    if(!erroConexao) {
-      var collection = db.collection(kanbanName)
-      var taskObject = { description: task, status: "todo" }
-      collection.insert(taskObject)
+app.get('/:kanban/fetch-data', (req, res) => {
+  MongoClient.connect(connectionURI,(connectionError, database) => {
+    if(connectionError) {
+      res.status(500).send('Database Error');
+    } else{
+      kanbanTitle = req.params['kanban']
+      database.collection('kanbans').find({title: kanbanTitle}).toArray((err, items) => {
+        res.setHeader('Content-Type', 'application/json')
+        res.send(JSON.stringify(items))
+      })
     }
   })
-  res.redirect('/' + kanban.title)
 })
+
+app.post('/create-kanban', (req, res) => {
+  MongoClient.connect(connectionURI,(connectionError, database) => {
+    if(connectionError) {
+      res.status(500).send('Database Error');
+    } else{
+      database.collection('kanbans').insert(req.body)
+    }
+  })
+})
+
+app.post('/add-task', (req, res) => {
+  MongoClient.connect(connectionURI,(connectionError, database) => {
+    if(connectionError) {
+      res.status(500).send('Database Error');
+    } else{
+      database.collection('kanbans').update(
+        {"title": kanbanTitle},
+        {"$push": {"tasks": req.body}},
+        {"upsert": "true"}
+      )
+    }
+  })
+})
+
+app.post('/move-task', (req, res) => {
+  MongoClient.connect(connectionURI,(connectionError, database) => {
+    if(connectionError) {
+      res.status(500).send('Database Error');
+    } else{
+      const taskToBeMoved = req.body
+      database.collection('kanbans').update(
+        {"title": kanbanTitle},
+        {"$pull": {"tasks": {"description": taskToBeMoved.description}}},
+        {"upsert": "true"}
+      )
+      database.collection('kanbans').update(
+        {"title": kanbanTitle},
+        {"$push": {"tasks": taskToBeMoved}},
+        {"upsert": "true"}
+      )
+    }
+  })
+})
+
+app.post('/remove-task', (req, res) => {
+  MongoClient.connect(connectionURI,(connectionError, database) => {
+    if(connectionError) {
+      res.status(500).send('Database Error');
+    } else{
+      const taskToBeRemoved = req.body
+      database.collection('kanbans').update(
+        {"title": kanbanTitle},
+        {"$pull": {"tasks": taskToBeRemoved}},
+        {"upsert": "true"}
+      )
+    }
+  })
+})
+
 
 app.listen(3000, () => {
-  console.log('Servidor rodando em http://localhost:3000/')
+  console.log('Server listening on port 3000')
 })
