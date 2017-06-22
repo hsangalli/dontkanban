@@ -12,12 +12,9 @@ new Vue({
     }
   },
   methods: {
-    checkIfEnterWasPressed(event){
-      event = event || window.event;
-      if (event.keyCode == 13) {
-        this.addTask();
-        this.newTask = {column: 1};
-      }
+    validateNewTask(){
+      this.addTask();
+      this.newTask = {column: 1};
     },
     addTask(){
       const path = location.pathname;

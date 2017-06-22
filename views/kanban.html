@@ -54,7 +54,7 @@
       </div>
     </section>
     <section class="user-input">
-      <input v-model="newTask.description" v-on:keyup="checkIfEnterWasPressed(event)" type="text" placeholder="Type here and press enter to add a new task..." autofocus >
+      <input v-model="newTask.description" v-on:keyup.enter="validateNewTask()" type="text" placeholder="Type here and press enter to add a new task..." autofocus >
     </section>
   </div>
   <script src="scripts/app.js"></script>
