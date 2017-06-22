@@ -12,14 +12,14 @@ new Vue({
     }
   },
   methods: {
-    checkIfEnterWasPressed: function(event){
+    checkIfEnterWasPressed(event){
       event = event || window.event;
       if (event.keyCode == 13) {
         this.addTask();
         this.newTask = {column: 1};
       }
     },
-    addTask: function(){
+    addTask(){
       const path = location.pathname;
       const colors = ['blue', 'orange', 'purple', 'red', 'yellow'];
       const randomNumber = Math.floor((Math.random() * colors.length));
@@ -27,18 +27,18 @@ new Vue({
       this.kanban.tasks.push(this.newTask);
       this.$http.post('/add-task', this.newTask, {headers: {'Content-Type': 'application/json'}});
     },
-    moveTask: function(task){
+    moveTask(task){
       const indexOfTask = this.kanban.tasks.indexOf(task);
       this.kanban.tasks[indexOfTask].column += 1;
       this.$http.post('/move-task', task, {headers: {'Content-Type': 'application/json'}});
     },
-    removeTask: function(task){
+    removeTask(task){
       const indexOfTask = this.kanban.tasks.indexOf(task);
       this.kanban.tasks.splice(indexOfTask, 1);
       this.$http.post('/remove-task', task, {headers: {'Content-Type': 'application/json'}});
     }
   },
-  mounted: function(){
+  mounted(){
     const path = location.pathname;
     const kanbanTitle = path.slice(1);
     this.kanban.title = kanbanTitle;
