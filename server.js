@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 const MongoClient = require('mongodb').MongoClient
-const connectionURI = "mongodb://localhost/dontkanban"
+const connectionURI = process.env.MONGOLAB_URI
 
 var kanbanTitle = ''
 
