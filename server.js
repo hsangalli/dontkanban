@@ -10,6 +10,7 @@ app.use(express.static(__dirname + '/public'))
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
+  console.log("!$@#%@#$&$#*#%* ---- "+connectionURI)
   res.sendFile(__dirname + '/views/index.html')
 })
 
