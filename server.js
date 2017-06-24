@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 const MongoClient = require('mongodb').MongoClient
-const connectionURI = process.env.MONGOLAB_URI
+const connectionURI = "mongodb://regis:geoprocessamento@ds137882.mlab.com:37882/kanbans"
 
 var kanbanTitle = ''
 
@@ -10,7 +10,6 @@ app.use(express.static(__dirname + '/public'))
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
-  console.log("!$@#%@#$&$#*#%* ---- "+connectionURI)
   res.sendFile(__dirname + '/views/index.html')
 })
 
