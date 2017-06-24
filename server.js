@@ -6,6 +6,8 @@ const connectionURI = "mongodb://regis:geoprocessamento@ds137882.mlab.com:37882/
 
 var kanbanTitle = ''
 
+app.set('port', (process.env.PORT || 3000))
+
 app.use(express.static(__dirname + '/public'))
 app.use(bodyParser.json());
 
@@ -114,6 +116,6 @@ app.post('/remove-task', (req, res) => {
 })
 
 
-app.listen(3000, () => {
-  console.log('Server listening on port 3000')
+app.listen(app.get('port'), () => {
+  console.log('Node app is running on port ' + app.get('port'))
 })
