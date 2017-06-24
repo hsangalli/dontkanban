@@ -2,11 +2,12 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 const MongoClient = require('mongodb').MongoClient
-const connectionURI = "mongodb://regis:geoprocessamento@ds137882.mlab.com:37882/kanbans"
+const connectionURI = "mongodb://localhost/dontkanban"
 
 var kanbanTitle = ''
 
 app.set('port', (process.env.PORT || 3000))
+app.set('connectionURI', (process.env.MONGOLAB_URI || connectionURI))
 
 app.use(express.static(__dirname + '/public'))
 app.use(bodyParser.json());
@@ -16,7 +17,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/insert', (req, res) => {
-  MongoClient.connect(connectionURI,(connectionError, database) => {
+  MongoClient.connect(app.get('connectionURI'), (connectionError, database) => {
     if(connectionError) {
       res.status(500).send('Database Error');
     } else{
@@ -29,7 +30,7 @@ app.get('/insert', (req, res) => {
 })
 
 app.get('/drop', (req, res) => {
-  MongoClient.connect(connectionURI,(connectionError, database) => {
+  MongoClient.connect(app.get('connectionURI'), (connectionError, database) => {
     if(connectionError) {
       res.status(500).send('Database Error');
     } else{
@@ -43,7 +44,7 @@ app.get('/:kanban', (req, res) => {
 })
 
 app.get('/:kanban/fetch-data', (req, res) => {
-  MongoClient.connect(connectionURI,(connectionError, database) => {
+  MongoClient.connect(app.get('connectionURI'), (connectionError, database) => {
     if(connectionError) {
       res.status(500).send('Database Error');
     } else{
@@ -57,7 +58,7 @@ app.get('/:kanban/fetch-data', (req, res) => {
 })
 
 app.post('/create-kanban', (req, res) => {
-  MongoClient.connect(connectionURI,(connectionError, database) => {
+  MongoClient.connect(app.get('connectionURI'), (connectionError, database) => {
     if(connectionError) {
       res.status(500).send('Database Error');
     } else{
@@ -67,7 +68,7 @@ app.post('/create-kanban', (req, res) => {
 })
 
 app.post('/add-task', (req, res) => {
-  MongoClient.connect(connectionURI,(connectionError, database) => {
+  MongoClient.connect(app.get('connectionURI'), (connectionError, database) => {
     if(connectionError) {
       res.status(500).send('Database Error');
     } else{
@@ -81,7 +82,7 @@ app.post('/add-task', (req, res) => {
 })
 
 app.post('/move-task', (req, res) => {
-  MongoClient.connect(connectionURI,(connectionError, database) => {
+  MongoClient.connect(app.get('connectionURI'), (connectionError, database) => {
     if(connectionError) {
       res.status(500).send('Database Error');
     } else{
@@ -101,7 +102,7 @@ app.post('/move-task', (req, res) => {
 })
 
 app.post('/remove-task', (req, res) => {
-  MongoClient.connect(connectionURI,(connectionError, database) => {
+  MongoClient.connect(app.get('connectionURI'), (connectionError, database) => {
     if(connectionError) {
       res.status(500).send('Database Error');
     } else{
@@ -114,7 +115,6 @@ app.post('/remove-task', (req, res) => {
     }
   })
 })
-
 
 app.listen(app.get('port'), () => {
   console.log('Node app is running on port ' + app.get('port'))
