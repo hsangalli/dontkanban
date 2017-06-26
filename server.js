@@ -16,29 +16,6 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/views/index.html')
 })
 
-app.get('/insert', (req, res) => {
-  MongoClient.connect(app.get('connectionURI'), (connectionError, database) => {
-    if(connectionError) {
-      res.status(500).send('Database Error');
-    } else{
-      database.collection('kanbans').insert({
-        title: "teste",
-        tasks: [{description: "Trab", color: "red"}]
-      })
-    }
-  })
-})
-
-app.get('/drop', (req, res) => {
-  MongoClient.connect(app.get('connectionURI'), (connectionError, database) => {
-    if(connectionError) {
-      res.status(500).send('Database Error');
-    } else{
-      database.collection('kanbans').drop()
-    }
-  })
-})
-
 app.get('/:kanban', (req, res) => {
   res.sendFile(__dirname + '/views/kanban.html')
 })
