@@ -1,10 +1,11 @@
-# Kanban
-Project developed with Vue.js, Node (Express) and MongoDB.
+# Dontkanban
+A Dontpad-like project developed with Vue.js, Node (Express) and MongoDB.
 
 ## Requirements
 Before running the project, you need to install the following programs:  
 > **Node.js**  
 > **NPM**  
+> **MongoDB**  
 
 ## Installation  
 > ```git clone https://github.com/hsangalli/kanban.git```  
