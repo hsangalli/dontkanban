@@ -26,7 +26,9 @@ new Vue({
     },
     moveTask(task){
       const indexOfTask = this.kanban.tasks.indexOf(task);
-      this.kanban.tasks[indexOfTask].column += 1;
+      this.kanban.tasks.splice(indexOfTask,1);
+      task.column += 1;
+      this.kanban.tasks.push(task);
       this.$http.post('/' + this.kanban.title + '/move-task', task, {headers: {'Content-Type': 'application/json'}});
     },
     removeTask(task){
