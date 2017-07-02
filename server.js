@@ -4,8 +4,6 @@ const bodyParser = require('body-parser')
 const MongoClient = require('mongodb').MongoClient
 const connectionURI = "mongodb://localhost/dontkanban"
 
-var kanbanTitle = ''
-
 app.set('port', (process.env.PORT || 3000))
 app.set('connectionURI', (process.env.MONGOLAB_URI || connectionURI))
 
@@ -25,7 +23,7 @@ app.get('/:kanban/fetch-data', (req, res) => {
     if(connectionError) {
       res.status(500).send('Database Error');
     } else{
-      kanbanTitle = req.params['kanban']
+      const kanbanTitle = req.params['kanban']
       database.collection('kanbans').find({title: kanbanTitle}).toArray((err, items) => {
         res.setHeader('Content-Type', 'application/json')
         res.send(JSON.stringify(items))
@@ -44,11 +42,12 @@ app.post('/create-kanban', (req, res) => {
   })
 })
 
-app.post('/add-task', (req, res) => {
+app.post('/:kanban/add-task', (req, res) => {
   MongoClient.connect(app.get('connectionURI'), (connectionError, database) => {
     if(connectionError) {
       res.status(500).send('Database Error');
     } else{
+      const kanbanTitle = req.params['kanban']
       database.collection('kanbans').update(
         {"title": kanbanTitle},
         {"$push": {"tasks": req.body}},
@@ -58,11 +57,12 @@ app.post('/add-task', (req, res) => {
   })
 })
 
-app.post('/move-task', (req, res) => {
+app.post('/:kanban/move-task', (req, res) => {
   MongoClient.connect(app.get('connectionURI'), (connectionError, database) => {
     if(connectionError) {
       res.status(500).send('Database Error');
     } else{
+      const kanbanTitle = req.params['kanban']
       const taskToBeMoved = req.body
       database.collection('kanbans').update(
         {"title": kanbanTitle},
@@ -78,11 +78,12 @@ app.post('/move-task', (req, res) => {
   })
 })
 
-app.post('/remove-task', (req, res) => {
+app.post('/:kanban/remove-task', (req, res) => {
   MongoClient.connect(app.get('connectionURI'), (connectionError, database) => {
     if(connectionError) {
       res.status(500).send('Database Error');
     } else{
+      const kanbanTitle = req.params['kanban']
       const taskToBeRemoved = req.body
       database.collection('kanbans').update(
         {"title": kanbanTitle},

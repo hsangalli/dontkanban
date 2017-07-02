@@ -22,17 +22,17 @@ new Vue({
       const randomNumber = Math.floor((Math.random() * colors.length));
       this.newTask.color = colors[randomNumber];
       this.kanban.tasks.push(this.newTask);
-      this.$http.post('/add-task', this.newTask, {headers: {'Content-Type': 'application/json'}});
+      this.$http.post('/' + this.kanban.title + '/add-task', this.newTask, {headers: {'Content-Type': 'application/json'}});
     },
     moveTask(task){
       const indexOfTask = this.kanban.tasks.indexOf(task);
       this.kanban.tasks[indexOfTask].column += 1;
-      this.$http.post('/move-task', task, {headers: {'Content-Type': 'application/json'}});
+      this.$http.post('/' + this.kanban.title + '/move-task', task, {headers: {'Content-Type': 'application/json'}});
     },
     removeTask(task){
       const indexOfTask = this.kanban.tasks.indexOf(task);
       this.kanban.tasks.splice(indexOfTask, 1);
-      this.$http.post('/remove-task', task, {headers: {'Content-Type': 'application/json'}});
+      this.$http.post('/' + this.kanban.title + '/remove-task', task, {headers: {'Content-Type': 'application/json'}});
     }
   },
   mounted(){
