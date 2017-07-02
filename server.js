@@ -5,14 +5,14 @@ const MongoClient = require('mongodb').MongoClient
 const connectionURI = "mongodb://localhost/dontkanban"
 
 app.set('port', (process.env.PORT || 3000))
-app.set('connectionURI', (process.env.MONGOLAB_URI || connectionURI))
+app.set('connectionURI', (process.env.MONGO_URI || connectionURI))
 
 app.use(express.static(__dirname + '/public'))
-app.use(bodyParser.json());
+app.use(bodyParser.json())
 
 MongoClient.connect(app.get('connectionURI'), (connectionError, database) => {
   if(connectionError) {
-    res.status(500).send('Database Error');
+    res.status(500).send('Database Error')
   } else{
     app.get('/', (req, res) => {
       res.sendFile(__dirname + '/views/index.html')
