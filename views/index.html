@@ -51,14 +51,20 @@
       <div class="container">
         <h1>Don't Kanban!</h1>
         <h4>Developed by <a target="_blank" href="http://github.com/hsangalli">@hsangalli</a></h4>
-        <input type="text" placeholder="Get your own kanban!" id="userInput" autofocus>
+        <input type="text" placeholder="Get your own kanban!" id="userInput">
         <button type="button" onclick="getYourKanban()">Let's go</button>
       </div>
     </div>
     <script type="text/javascript">
       function getYourKanban(){
-        const input = document.getElementById('userInput').value;
-        if(input != '') window.location.replace(window.location.href.concat(input));
+        var input = document.getElementById('userInput').value;
+        var url = window.location.href;
+        if(input != ''){
+        if(url.endsWith('/'){
+           window.location.replace(url.concat(input));
+        }else{
+          window.location.replace(url.concat('/').concat(input));
+        }}
       }
     </script>
   </body>
