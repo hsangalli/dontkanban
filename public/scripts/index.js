@@ -5,10 +5,14 @@ new Vue({
   },
   methods: {
     redirectToKanban(){
-      alert('funfou');
+      const URL = window.location.href;
+      if (this.kanbanTitle != '') {
+        if (URL.endsWith('/')) {
+          window.location.replace(URL.concat(this.kanbanTitle));
+        } else {
+          window.location.replace(URL.concat('/').concat(this.kanbanTitle));
+        }
+      }
     }
-  },
-  mounted(){
-    console.log(this.kanbanTitle);
   }
 });
