@@ -48,5 +48,10 @@ new Vue({
         this.$http.post('/create-kanban', this.kanban, {headers: {'Content-Type': 'application/json'}});
       }
     });
+
+    const headerTitle = document.querySelector('header h1');
+    headerTitle.addEventListener('click', function(){
+      window.location = '/';
+    });
   }
 });

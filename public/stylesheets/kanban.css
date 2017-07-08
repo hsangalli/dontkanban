@@ -15,6 +15,10 @@ header {
   height: 10vh;
 }
 
+header h1 {
+  cursor: pointer;
+}
+
 .board {
   display: flex;
   flex-wrap: wrap;
