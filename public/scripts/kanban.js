@@ -13,8 +13,10 @@ new Vue({
   },
   methods: {
     validateNewTask(){
-      this.addTask();
-      this.newTask = {column: 1};
+      if (this.newTask.description.length > 0) {
+        this.addTask();
+        this.newTask = {column: 1};
+      }
     },
     addTask(){
       const path = location.pathname;
