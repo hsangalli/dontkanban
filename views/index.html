@@ -2,10 +2,65 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Henrique Sangalli Corrêa">
+    <meta name="description" content="Single-page application project developed with Vue.js">
+    <meta name="keywords" content="Kanban, single-page application, vue.js">
     <title>Don't Kanban</title>
     <link rel="shortcut icon" type="image/png" href="images/favicon.png"/>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <style>
+      .center-wrapper{
+        display: table;
+        height: 90vh;
+        width: 100%;
+      }
+      .container{
+        display: table-cell;
+        font-family: Open Sans;
+        font-size: 1.2em;
+        margin: 0 auto;
+        text-align: center;
+        vertical-align: middle;
+        width: 90%;
+      }
+      .container input{
+        border: 1px solid rgba(0,0,0,0.15);
+        border-radius: 4px;
+        font-size: 1.1em;
+        margin-bottom: 10px;
+        outline: none;
+        padding: 15px 10px;
+      }
+      .container button{
+        background-color: transparent;
+        border: 1px solid rgba(0,0,0,0.15);
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 1.1em;
+        outline: none;
+        padding: 15px 20px;
+      }
+      .container button:hover{
+        background-color: rgba(0,0,0,0.05);
+      }
+    </style>
   </head>
   <body>
-    <h1>Hello world!</h1>
+    <div class="center-wrapper">
+      <div class="container">
+        <h1>Don't Kanban!</h1>
+        <h4>Developed by <a target="_blank" href="http://github.com/hsangalli">@hsangalli</a></h4>
+        <input type="text" placeholder="Get your own kanban!" id="userInput">
+        <button type="button" onclick="getYourKanban()">Let's go</button>
+      </div>
+    </div>
+    <script type="text/javascript">
+      function getYourKanban(){
+        var input = document.getElementById('userInput').value;
+        if(input != '')
+        window.location.replace(window.location.href.concat('/').concat(input));
+      }
+    </script>
   </body>
 </html>
