@@ -1,19 +1,30 @@
-# Dontkanban
-A Dontpad-like project developed with Vue.js, Node (Express) and MongoDB.
+# Don't Kanban
+A Dontpad-like application for kanbans developed with Vue.js, Node (Express) and MongoDB.  
 
-## Requirements
+Create your own kanbans without logging in.  
+All you have to do is save the URL!  
+
+http://dontkanban.herokuapp.com/
+
+## Contributing to the project
+<details>
+  <summary>Click to see more</summary>
+  
+### Requirements  
 Before running the project, you need to install the following programs:  
 > **Node.js**  
 > **NPM**  
 > **MongoDB**  
 
-## Installation  
-> ```git clone https://github.com/hsangalli/kanban.git```  
-> ```cd kanban```  
+### Installation  
+> ```git clone https://github.com/hsangalli/dontkanban.git```  
+> ```cd dontkanban```  
 > ```npm install```  
 
-## Execution
-To run the application, execute:
-> ```node server.js```  
+### Execution  
+To run the application, execute:  
+> ```npm start```  
 
 And access through your browser http://localhost:3000/
+
+</details>
