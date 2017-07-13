@@ -19,33 +19,33 @@
   </header>
   <div id="app">
     <section class="board">
-      <div class="dashed-border-right">
+      <div id="column-1" @dragover.prevent @drop="dropTask(event)">
         <h2>To do</h2>
         <ul>
           <template v-for="task in kanban.tasks">
-            <li v-if="task.column == 1" v-on:click="moveTask(task)" v-bind:class="task.color">
+            <li v-if="task.column == 1" v-bind:class="task.color" @drag="dragTask(task)" draggable>
               <p>{{ task.description }}</p>
               <i class="fa fa-play"></i>
             </li>
           </template>
         </ul>
       </div>
-      <div class="dashed-border-right">
+      <div id="column-2" @dragover.prevent @drop="dropTask(event)">
         <h2>Doing</h2>
         <ul>
           <template v-for="task in kanban.tasks">
-            <li v-if="task.column == 2" v-on:click="moveTask(task)" v-bind:class="task.color">
+            <li v-if="task.column == 2" v-bind:class="task.color" @drag="dragTask(task)" draggable>
               <p>{{ task.description }}</p>
               <i class="fa fa-check"></i>
             </li>
           </template>
         </ul>
       </div>
-      <div>
+      <div id="column-3" @dragover.prevent @drop="dropTask(event)">
         <h2>Done</h2>
         <ul>
           <template v-for="task in kanban.tasks">
-            <li v-if="task.column == 3" v-on:click="removeTask(task)" v-bind:class="task.color">
+            <li v-if="task.column == 3" v-bind:class="task.color" @drag="dragTask(task)" draggable>
               <p>{{ task.description }}</p>
               <i class="fa fa-trash-o"></i>
             </li>
@@ -54,7 +54,7 @@
       </div>
     </section>
     <section class="user-input">
-      <input v-model="newTask.description" v-on:keyup.enter="validateNewTask()" type="text" placeholder="Type here and press enter to add a new task..." autofocus >
+      <input v-model="newTask.description" @keyup.enter="validateNewTask()" type="text" placeholder="Type here and press enter to add a new task..." autofocus >
     </section>
   </div>
   <script src="scripts/kanban.js"></script>

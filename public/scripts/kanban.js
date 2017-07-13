@@ -9,7 +9,9 @@ new Vue({
       column: 1,
       description: '',
       color: ''
-    }
+    },
+    taskBeingMoved: {},
+    dragCounter: 0
   },
   methods: {
     validateNewTask(){
@@ -26,17 +28,18 @@ new Vue({
       this.kanban.tasks.push(this.newTask);
       this.$http.post('/' + this.kanban.title + '/add-task', this.newTask, {headers: {'Content-Type': 'application/json'}});
     },
-    moveTask(task){
-      const indexOfTask = this.kanban.tasks.indexOf(task);
-      this.kanban.tasks.splice(indexOfTask,1);
-      task.column += 1;
-      this.kanban.tasks.push(task);
-      this.$http.post('/' + this.kanban.title + '/move-task', task, {headers: {'Content-Type': 'application/json'}});
-    },
-    removeTask(task){
-      const indexOfTask = this.kanban.tasks.indexOf(task);
+    dragTask(task){
+      if (this.dragCounter++ > 0) return;
+      this.taskBeingMoved = task;
+      const indexOfTask = this.kanban.tasks.indexOf(this.taskBeingMoved);
       this.kanban.tasks.splice(indexOfTask, 1);
-      this.$http.post('/' + this.kanban.title + '/remove-task', task, {headers: {'Content-Type': 'application/json'}});
+    },
+    dropTask(event){
+      this.dragCounter = 0;
+      const targetColumn = parseInt(event.target.id.replace(/\D/g, ''));
+      this.taskBeingMoved.column = targetColumn;
+      this.kanban.tasks.push(this.taskBeingMoved);
+      this.$http.post('/' + this.kanban.title + '/move-task', this.taskBeingMoved, {headers: {'Content-Type': 'application/json'}});
     }
   },
   mounted(){
