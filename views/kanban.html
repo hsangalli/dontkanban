@@ -16,7 +16,7 @@
 <body>
   <div id="app" v-on:dragover.prevent v-on:drop="dropTask(event)">
     <header>
-      <h1>Don't Kanban</h1>
+      <h1 v-on:click="goBackToHome()">Don't Kanban</h1>
     </header>
     <section class="board">
       <div id="column-1">

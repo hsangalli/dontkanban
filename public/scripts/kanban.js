@@ -14,6 +14,9 @@ new Vue({
     dragCounter: 0
   },
   methods: {
+    goBackToHome(){
+      window.location = '/';
+    },
     validateNewTask(){
       if (this.newTask.description.length > 0) {
         this.addTask();
@@ -52,11 +55,6 @@ new Vue({
       } else {
         this.$http.post('/create-kanban', this.kanban, {headers: {'Content-Type': 'application/json'}});
       }
-    });
-
-    const headerTitle = document.querySelector('header h1');
-    headerTitle.addEventListener('click', function(){
-      window.location = '/';
     });
   }
 });
