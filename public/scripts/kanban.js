@@ -37,7 +37,7 @@ new Vue({
     dropTask(event){
       this.dragCounter = 0;
       const targetColumn = parseInt(event.target.id.replace(/\D/g, ''));
-      this.taskBeingMoved.column = targetColumn;
+      if (targetColumn >= 1 && targetColumn <= 3) this.taskBeingMoved.column = targetColumn;
       this.kanban.tasks.push(this.taskBeingMoved);
       this.$http.post('/' + this.kanban.title + '/move-task', this.taskBeingMoved, {headers: {'Content-Type': 'application/json'}});
     }
