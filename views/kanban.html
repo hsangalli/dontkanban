@@ -23,7 +23,7 @@
         <h2>To do</h2>
         <ul>
           <template v-for="task in kanban.tasks">
-            <li v-if="task.column == 1" v-bind:class="task.color" v-on:drag="dragTask(task)" draggable>
+            <li v-if="task.column == 1" v-bind:class="task.color" v-on:click="showDetails(task)" v-on:drag="dragTask(task)" draggable>
               <p>{{ task.description }}</p>
               <i class="fa fa-eye" aria-hidden="true"></i>
             </li>
@@ -34,7 +34,7 @@
         <h2>Doing</h2>
         <ul>
           <template v-for="task in kanban.tasks">
-            <li v-if="task.column == 2" v-bind:class="task.color" v-on:drag="dragTask(task)" draggable>
+            <li v-if="task.column == 2" v-bind:class="task.color" v-on:click="showDetails(task)" v-on:drag="dragTask(task)" draggable>
               <p>{{ task.description }}</p>
               <i class="fa fa-eye" aria-hidden="true"></i>
             </li>
@@ -45,7 +45,7 @@
         <h2>Done</h2>
         <ul>
           <template v-for="task in kanban.tasks">
-            <li v-if="task.column == 3" v-bind:class="task.color" v-on:drag="dragTask(task)" draggable>
+            <li v-if="task.column == 3" v-bind:class="task.color" v-on:click="showDetails(task)" v-on:drag="dragTask(task)" draggable>
               <p>{{ task.description }}</p>
               <i class="fa fa-eye" aria-hidden="true"></i>
             </li>
@@ -55,6 +55,9 @@
     </section>
     <section class="user-input">
       <input v-model="newTask.description" v-on:keyup.enter="validateNewTask()" type="text" placeholder="Type here and press enter to add a new task..." autofocus >
+    </section>
+    <section v-if="detailsAreVisible" class="task-details">
+      <!-- TODO: Modal showing more details of the task that was clicked -->
     </section>
   </div>
   <script src="scripts/kanban.js"></script>

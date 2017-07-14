@@ -11,7 +11,8 @@ new Vue({
       color: ''
     },
     taskBeingMoved: {},
-    dragCounter: 0
+    dragCounter: 0,
+    detailsAreVisible: false
   },
   methods: {
     goBackToHome(){
@@ -30,6 +31,9 @@ new Vue({
       this.newTask.color = colors[randomNumber];
       this.kanban.tasks.push(this.newTask);
       this.$http.post('/' + this.kanban.title + '/add-task', this.newTask, {headers: {'Content-Type': 'application/json'}});
+    },
+    showDetails(task){
+      this.detailsAreVisible = !this.detailsAreVisible;
     },
     dragTask(task){
       if (this.dragCounter++ > 0) return;
