@@ -106,7 +106,7 @@ header h1 {
     font-size: 1.5em;
     padding: 0 1%;
   }
-  .dashed-border-right {
+  #column-1, #column-2 {
     border-right: 1px dashed rgba(0, 0, 0, .25);
   }
 }

@@ -14,40 +14,40 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/1.3.1/vue-resource.min.js"></script>
 </head>
 <body>
-  <header>
-    <h1>Don't Kanban</h1>
-  </header>
-  <div id="app">
+  <div id="app" v-on:dragover.prevent v-on:drop="dropTask(event)">
+    <header>
+      <h1 v-on:click="goBackToHome()">Don't Kanban</h1>
+    </header>
     <section class="board">
-      <div class="dashed-border-right">
+      <div id="column-1">
         <h2>To do</h2>
         <ul>
           <template v-for="task in kanban.tasks">
-            <li v-if="task.column == 1" v-on:click="moveTask(task)" v-bind:class="task.color">
+            <li v-if="task.column == 1" v-bind:class="task.color" v-on:click="showDetails(task)" v-on:drag="dragTask(task)" draggable>
               <p>{{ task.description }}</p>
-              <i class="fa fa-play"></i>
+              <i class="fa fa-eye" aria-hidden="true"></i>
             </li>
           </template>
         </ul>
       </div>
-      <div class="dashed-border-right">
+      <div id="column-2">
         <h2>Doing</h2>
         <ul>
           <template v-for="task in kanban.tasks">
-            <li v-if="task.column == 2" v-on:click="moveTask(task)" v-bind:class="task.color">
+            <li v-if="task.column == 2" v-bind:class="task.color" v-on:click="showDetails(task)" v-on:drag="dragTask(task)" draggable>
               <p>{{ task.description }}</p>
-              <i class="fa fa-check"></i>
+              <i class="fa fa-eye" aria-hidden="true"></i>
             </li>
           </template>
         </ul>
       </div>
-      <div>
+      <div id="column-3">
         <h2>Done</h2>
         <ul>
           <template v-for="task in kanban.tasks">
-            <li v-if="task.column == 3" v-on:click="removeTask(task)" v-bind:class="task.color">
+            <li v-if="task.column == 3" v-bind:class="task.color" v-on:click="showDetails(task)" v-on:drag="dragTask(task)" draggable>
               <p>{{ task.description }}</p>
-              <i class="fa fa-trash-o"></i>
+              <i class="fa fa-eye" aria-hidden="true"></i>
             </li>
           </template>
         </ul>
@@ -55,6 +55,9 @@
     </section>
     <section class="user-input">
       <input v-model="newTask.description" v-on:keyup.enter="validateNewTask()" type="text" placeholder="Type here and press enter to add a new task..." autofocus >
+    </section>
+    <section v-if="detailsAreVisible" class="task-details">
+      <!-- TODO: Modal showing more details of the task that was clicked -->
     </section>
   </div>
   <script src="scripts/kanban.js"></script>
