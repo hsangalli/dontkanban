@@ -45,21 +45,13 @@ header h1 {
   display: flex;
   margin-bottom: 5%;
   padding: 5%;
-}
-
-.board div ul li p {
+  transition: .1s;
   width: 80%;
 }
 
-.board div ul li i {
-  text-align: center;
-  opacity: 0;
-  width: 20%;
-}
-
-.board div ul li:hover i {
-  opacity: 1;
-  transition: .5s;
+.board div ul li:hover {
+  margin-left: 2%;
+  transition: .1s;
 }
 
 .user-input {

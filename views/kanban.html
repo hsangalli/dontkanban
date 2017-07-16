@@ -7,8 +7,7 @@
   <meta name="description" content="Single-page application project developed with Vue.js">
   <meta name="keywords" content="Kanban, single-page application, vue.js">
   <link rel="stylesheet" href="stylesheets/kanban.css">
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-  <script src="https://use.fontawesome.com/3f86ba9d74.js"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
   <title>Don't Kanban</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.0/vue.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/1.3.1/vue-resource.min.js"></script>
@@ -25,7 +24,6 @@
           <template v-for="task in kanban.tasks">
             <li v-if="task.column == 1" v-bind:class="task.color" v-on:click="showDetails(task)" v-on:drag="dragTask(task)" draggable>
               <p>{{ task.description }}</p>
-              <i class="fa fa-eye" aria-hidden="true"></i>
             </li>
           </template>
         </ul>
@@ -36,7 +34,6 @@
           <template v-for="task in kanban.tasks">
             <li v-if="task.column == 2" v-bind:class="task.color" v-on:click="showDetails(task)" v-on:drag="dragTask(task)" draggable>
               <p>{{ task.description }}</p>
-              <i class="fa fa-eye" aria-hidden="true"></i>
             </li>
           </template>
         </ul>
@@ -47,7 +44,6 @@
           <template v-for="task in kanban.tasks">
             <li v-if="task.column == 3" v-bind:class="task.color" v-on:click="showDetails(task)" v-on:drag="dragTask(task)" draggable>
               <p>{{ task.description }}</p>
-              <i class="fa fa-eye" aria-hidden="true"></i>
             </li>
           </template>
         </ul>
