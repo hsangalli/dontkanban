@@ -26,7 +26,7 @@ new Vue({
     },
     addTask(){
       const path = location.pathname;
-      const colors = ['blue', 'orange', 'purple', 'red', 'yellow'];
+      const colors = ['blue', 'green', 'orange', 'pink', 'purple', 'red', 'yellow'];
       const randomNumber = Math.floor((Math.random() * colors.length));
       this.newTask.color = colors[randomNumber];
       this.kanban.tasks.push(this.newTask);
