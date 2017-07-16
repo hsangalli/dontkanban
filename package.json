@@ -1,9 +1,10 @@
 {
-  "name": "kanban",
+  "name": "dontkanban",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
   "scripts": {
+    "start": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "http://github.com/hsangalli",
@@ -12,5 +13,8 @@
     "body-parser": "^1.17.1",
     "express": "^4.15.2",
     "mongodb": "^2.2.26"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
   }
 }
