@@ -9,7 +9,7 @@ http://dontkanban.herokuapp.com/
 ## Contributing to the project
 <details>
   <summary>Click to see more</summary>
-  
+
 ### Requirements  
 Before running the project, you need to install the following programs:  
 > **Node.js**  
@@ -23,7 +23,7 @@ Before running the project, you need to install the following programs:
 
 ### Execution  
 To run the application, execute:  
-> ```npm start```  
+> ```nodemon server.js```  
 
 And access through your browser http://localhost:3000/
 
