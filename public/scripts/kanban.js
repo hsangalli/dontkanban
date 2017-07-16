@@ -43,7 +43,13 @@ new Vue({
     },
     dropTask(event){
       this.dragCounter = 0;
-      const targetColumn = parseInt(event.target.id.replace(/\D/g, ''));
+      const targetHasId = event.target.id;
+      let targetColumn;
+      if (targetHasId) {
+        targetColumn = parseInt(event.target.id.replace(/\D/g, ''));
+      } else {
+        targetColumn = parseInt(event.target.parentNode.parentNode.id.replace(/\D/g, ''));
+      }
       if (targetColumn >= 1 && targetColumn <= 3) this.taskBeingMoved.column = targetColumn;
       this.kanban.tasks.push(this.taskBeingMoved);
       this.$http.post('/' + this.kanban.title + '/move-task', this.taskBeingMoved, {headers: {'Content-Type': 'application/json'}});
