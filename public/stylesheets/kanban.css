@@ -43,9 +43,8 @@ header h1 {
   box-shadow: 6px 6px 30px -15px rgb(0,0,0);
   cursor: pointer;
   display: flex;
-  margin: 5% 0;
+  margin-bottom: 5%;
   padding: 5%;
-  width: 90%;
 }
 
 .board div ul li p {
@@ -95,6 +94,13 @@ header h1 {
     padding: 1%;
     width: 30%;
   }
+  .board div h2 {
+    height: 10%;
+  }
+  .board div ul {
+    height: 90%;
+    overflow-y: auto;
+  }
   .board div ul li {
     font-size: 1.5em;
     width: 75%;
@@ -106,7 +112,7 @@ header h1 {
     font-size: 1.5em;
     padding: 0 1%;
   }
-  #column-1, #column-2 {
+  .dashed-border {
     border-right: 1px dashed rgba(0, 0, 0, .25);
   }
 }

@@ -19,9 +19,9 @@
       <h1 v-on:click="goBackToHome()">Don't Kanban</h1>
     </header>
     <section class="board">
-      <div id="column-1">
+      <div class="dashed-border">
         <h2>To do</h2>
-        <ul>
+        <ul id="column-1">
           <template v-for="task in kanban.tasks">
             <li v-if="task.column == 1" v-bind:class="task.color" v-on:click="showDetails(task)" v-on:drag="dragTask(task)" draggable>
               <p>{{ task.description }}</p>
@@ -30,9 +30,9 @@
           </template>
         </ul>
       </div>
-      <div id="column-2">
+      <div class="dashed-border">
         <h2>Doing</h2>
-        <ul>
+        <ul id="column-2">
           <template v-for="task in kanban.tasks">
             <li v-if="task.column == 2" v-bind:class="task.color" v-on:click="showDetails(task)" v-on:drag="dragTask(task)" draggable>
               <p>{{ task.description }}</p>
@@ -41,9 +41,9 @@
           </template>
         </ul>
       </div>
-      <div id="column-3">
+      <div>
         <h2>Done</h2>
-        <ul>
+        <ul id="column-3">
           <template v-for="task in kanban.tasks">
             <li v-if="task.column == 3" v-bind:class="task.color" v-on:click="showDetails(task)" v-on:drag="dragTask(task)" draggable>
               <p>{{ task.description }}</p>
