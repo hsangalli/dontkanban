@@ -16,10 +16,10 @@
 <body>
   <div class="center-wrapper" id="app">
     <div class="container">
-      <h1>Don't Kanban!</h1>
+      <h1>Don't Kanban</h1>
       <h4>Developed by <a target="_blank" href="http://github.com/hsangalli">@hsangalli</a></h4>
-      <input v-model="kanbanTitle" v-on:keyup.enter="redirectToKanban()" type="text" placeholder="Get your own kanban!" autofocus>
-      <button type="button" v-on:click="redirectToKanban()">Let's go</button>
+      <input v-model="kanbanTitle" v-on:keyup.enter="redirectToKanban()" type="text" placeholder="Enter your kanban's title" autofocus>
+      <button type="button" v-on:click="redirectToKanban()">Go!</button>
     </div>
   </div>
   <script src="scripts/index.js"></script>
