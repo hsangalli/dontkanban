@@ -8,12 +8,6 @@
   },
   "author": "http://github.com/hsangalli",
   "license": "ISC",
-  "dependencies": {
-    "body-parser": "^1.17.1",
-    "express": "^4.15.2",
-    "mongodb": "^2.2.26"
-  },
-  "devDependencies": {
-    "nodemon": "^1.11.0"
-  }
+  "dependencies": {},
+  "devDependencies": {}
 }
