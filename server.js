@@ -1,8 +1,10 @@
 const express = require('express')
+const example = require('./src/example')
+
 const app = express()
 
 app.get('/', (req, res) => {
-  res.send('Hello world!')
+  res.send(example.say())
 })
 
 app.listen(3000, () => {
