@@ -3,7 +3,6 @@ const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const example = require('./src/example')
 const Board = require('./src/models/board')
-const Task = require('./src/models/task')
 
 mongoose.connect('mongodb://localhost/dontkanban')
 const db = mongoose.connection
@@ -20,51 +19,19 @@ app.get('/', (req, res) => {
   res.send(example.say())
 })
 
-app.get('/boards', (req, res) => {
-  Board.find({}, (err, boards) => {
-    if (err) {
-      console.log(err)
-    } else {
-      res.json(boards)
-    }
+app.get('/:board', (req, res) => {
+  const boardTitle = req.params.board
+  Board.find({ title: boardTitle }, (err, board) => {
+    err ? console.log(err) : res.json(board)
   })
 })
 
-app.post('/boards', (req, res) => {
+app.post('/:board', (req, res) => {
   const board = new Board()
-  board.title = req.body.title
+  board.title = req.params.board
   board.tasks = req.body.tasks
   board.save(err => {
-    if (err) {
-      console.log(err)
-    } else {
-      res.json(board)
-    }
-  })
-})
-
-app.get('/tasks', (req, res) => {
-  Task.find({}, (err, tasks) => {
-    if (err) {
-      console.log(err)
-    } else {
-      res.send(tasks)
-    }
-  })
-})
-
-app.post('/tasks', (req, res) => {
-  const task = new Task()
-  task.boardId = req.body.boardId
-  task.column = req.body.column
-  task.description = req.body.description
-  task.color = req.body.color
-  task.save(err => {
-    if (err) {
-      console.log(err)
-    } else {
-      res.json(task)
-    }
+    err ? console.log(err) : res.send()
   })
 })
 
