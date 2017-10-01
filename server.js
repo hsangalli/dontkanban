@@ -1,5 +1,6 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const bodyParser = require('body-parser')
 const example = require('./src/example')
 const Board = require('./src/models/board')
 const Task = require('./src/models/task')
@@ -8,15 +9,10 @@ mongoose.connect('mongodb://localhost/dontkanban')
 const db = mongoose.connection
 const Schema = mongoose.Schema
 
-db.once('open', () => {
-  console.log('Connected to MongoDB')
-})
-
-db.on('error', err => {
-  console.log(err)
-})
-
 const app = express()
+
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 
 app.set('port', process.env.PORT || 3000)
 
@@ -29,7 +25,20 @@ app.get('/boards', (req, res) => {
     if (err) {
       console.log(err)
     } else {
-      res.send(boards)
+      res.json(boards)
+    }
+  })
+})
+
+app.post('/boards', (req, res) => {
+  const board = new Board()
+  board.title = req.body.title
+  board.tasks = req.body.tasks
+  board.save(err => {
+    if (err) {
+      console.log(err)
+    } else {
+      res.json(board)
     }
   })
 })
@@ -40,6 +49,21 @@ app.get('/tasks', (req, res) => {
       console.log(err)
     } else {
       res.send(tasks)
+    }
+  })
+})
+
+app.post('/tasks', (req, res) => {
+  const task = new Task()
+  task.boardId = req.body.boardId
+  task.column = req.body.column
+  task.description = req.body.description
+  task.color = req.body.color
+  task.save(err => {
+    if (err) {
+      console.log(err)
+    } else {
+      res.json(task)
     }
   })
 })

@@ -6,6 +6,4 @@ const boardSchema = new Schema({
   tasks: []
 })
 
-const Board = mongoose.model('Board', boardSchema)
-
-module.exports = Board
+module.exports = mongoose.model('Board', boardSchema)
