@@ -21,8 +21,8 @@ app.get('/', (req, res) => {
 
 app.get('/:board', (req, res) => {
   const boardTitle = req.params.board
-  Board.find({ title: boardTitle }, (err, board) => {
-    err ? console.log(err) : res.json(board)
+  Board.find({ title: boardTitle }, (err, boards) => {
+    err ? console.log(err) : res.json(boards[0])
   })
 })
 
