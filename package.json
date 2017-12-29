@@ -4,16 +4,19 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon server.js",
+    "test": "mocha"
   },
   "author": "http://github.com/hsangalli",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.17.1",
-    "express": "^4.15.2",
-    "mongodb": "^2.2.26"
+    "body-parser": "^1.18.2",
+    "express": "^4.16.1",
+    "mongoose": "4.10.8"
   },
   "devDependencies": {
-    "nodemon": "^1.11.0"
+    "chai": "^4.1.2",
+    "mocha": "^3.5.3",
+    "nodemon": "^1.12.1"
   }
 }
